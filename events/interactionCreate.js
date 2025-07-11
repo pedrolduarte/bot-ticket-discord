@@ -10,7 +10,7 @@ module.exports = {
 
             try {
                 await button.execute(interaction);
-            } catch {
+            } catch(err) {
                 console.error(`❌ Erro ao executar o botão ${interaction.customId}:`, err);
             }
 

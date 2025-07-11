@@ -1,4 +1,5 @@
-const { PermissionsBitField, EmbedBuilder } = require('discord.js');
+const { PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+require('dotenv').config();
 
 module.exports = {
 
@@ -45,8 +46,15 @@ module.exports = {
             .setDescription(`Olá, <@${interaction.user.id}>! Seu ticket foi criado com sucesso.\n\nEstamos prontos para ajudar você da melhor forma possível. Fique à vontade para descrever seu problema ou dúvida aqui.`)
             .setFooter({ text: 'Equipe de Suporte • Estamos aqui para você!' })
             .setTimestamp();
+
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setCustomId('fechar_ticket')
+                .setLabel('🎟️ Fechar Ticket')
+                .setStyle(ButtonStyle.Primary)
+        );
     
-        await ticketChannel.send({ embeds: [embed] });
+        await ticketChannel.send({ embeds: [embed], components: [row] });
         await interaction.reply({ content: `🎟️ Ticket criado com sucesso: ${ticketChannel}`, ephemeral: true });
         
         const mencion = await ticketChannel.send(`<@${interaction.user.id}>`);
