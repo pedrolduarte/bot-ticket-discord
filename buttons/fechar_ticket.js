@@ -34,6 +34,19 @@ module.exports = {
             );
         }
 
+        const ticketOwnerID = channelName.replace('ticket-', '');
+        const ticketOwner = await interaction.client.users.fetch(ticketOwnerID);
+        if (ticketOwner) {
+
+            await ticketOwner.send(
+                {
+                    content: `🗂️ Log do ticket fechado: ${channel.name}`,
+                    files: [new AttachmentBuilder(filePath)]
+                }
+            );
+
+        }
+
         await channel.delete(`Ticket fechado por ${interaction.user.tag}`);
 
          fs.unlink(filePath, err => {
